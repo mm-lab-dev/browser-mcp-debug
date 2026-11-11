@@ -2,7 +2,7 @@
   "name": "browser-mcp-debug",
   "displayName": "Browser MCP Debug",
   "description": "Use Playwright MCP and Chrome DevTools MCP with your VS Code Chrome debugger, locally or over Remote-SSH.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "mm-lab",
   "private": true,
   "license": "MIT",

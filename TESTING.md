@@ -1,6 +1,6 @@
 # Verification scope
 
-Browser MCP Debug 0.1.1 was developed and exercised on Windows with desktop VS Code, Chrome, and Node.js 22.23.4. This file describes the checks and the evidence they produce.
+Browser MCP Debug 0.1.2 was developed and exercised on Windows with desktop VS Code, Chrome, and Node.js 22.23.4. This file describes the checks and the evidence they produce.
 
 ## Release candidate checked on 2026-11-11
 
@@ -11,9 +11,9 @@ Browser MCP Debug 0.1.1 was developed and exercised on Windows with desktop VS C
 - Package verification passed for all 13 distribution files, including the icon, legal notices, and README image URLs.
 - Both workflow files and both issue templates parsed successfully as YAML. The first Linux CI run reported a shutdown/port-release race; the corrected shutdown sequence still needs a Linux CI rerun.
 
-Reviewed package: `browser-mcp-debug-0.1.1.vsix`
+Reviewed package: `browser-mcp-debug-0.1.2.vsix`
 
-SHA-256: `80c30c450c96224ffd182c389defd0b66c11ff87ba1860af17f84aeb5ee00584`
+SHA-256: `0a4de69f8fd465fa9f24d463fe84f3922c7bec362c60bdec97d48a33745cb4d9`
 
 ## Automated checks
 

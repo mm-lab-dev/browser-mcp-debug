@@ -1,6 +1,6 @@
 # Browser MCP Debug
 
-**Use Playwright MCP and Chrome DevTools MCP in the same Chrome browser as your VS Code debugger.**
+**Use Playwright MCP and Chrome DevTools MCP in the same Chrome browser as your VS Code debugger, locally or over Remote-SSH.**
 
 Start a configuration from **Run and Debug** to share one dedicated Chrome between your project's Chrome debugger, Playwright MCP, and Chrome DevTools MCP on your local computer. Both MCP servers stop when debugging ends, so you do not need to start them manually or keep them running in the background.
 
