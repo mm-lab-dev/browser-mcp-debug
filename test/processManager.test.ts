@@ -5,6 +5,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { once } from 'node:events';
 import { ManagedProcess } from '../src/processManager';
 import { findExecutable, resolveCommand } from '../src/command';
+import { assertPortAvailable } from '../src/mcp';
 
 const log = { info() {}, error() {}, debug() {} };
 async function waitGone(pid: number): Promise<void> {
@@ -27,6 +28,23 @@ test('owned process and grandchild are stopped, stop is idempotent', { timeout: 
     await child.stop(); await child.stop();
     await Promise.all([waitGone(pid), waitGone(grandchild)]);
   } finally { await child.stop(); }
+});
+
+test('stop waits for a listening child to exit before its port is reused', { timeout: 15000 }, async () => {
+  // Exercise the stop boundary directly, without polling or retrying a bind.
+  for (let iteration = 0; iteration < 5; iteration++) {
+    const child = new ManagedProcess('listening child', log);
+    const stdout = once(child, 'stdout');
+    try {
+      await child.start(process.execPath, ['-e', `const net=require('node:net'); const server=net.createServer(); server.listen(0,'127.0.0.1',()=>console.log(server.address().port));`]);
+      const [output] = await stdout;
+      const port = Number(String(output).trim());
+      assert.ok(port > 0);
+      await child.stop();
+      if (process.platform !== 'win32') assert.throws(() => process.kill(child.pid!, 0), { code: 'ESRCH' });
+      await assertPortAvailable(port);
+    } finally { await child.stop(); }
+  }
 });
 test('abnormal exit is reported and orphan grandchild is killed', { timeout: 15000 }, async () => {
   const child = new ManagedProcess('test crash', log);

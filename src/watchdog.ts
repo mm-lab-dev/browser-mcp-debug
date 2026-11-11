@@ -25,6 +25,7 @@ if (require.main === module) {
   const [command, ...args] = JSON.parse(process.argv[2]) as string[];
   let stopping = false;
   const child = spawn(command, args, { windowsHide: true, shell: false, detached: process.platform !== 'win32', stdio: ['pipe', 'pipe', 'pipe'] });
+  const childClosed = new Promise<void>(resolve => child.once('close', () => resolve()));
   const send = (value: unknown): void => { if (process.connected) process.send?.(value, () => {}); };
   const stdout = new StringDecoder('utf8'), stderr = new StringDecoder('utf8');
   child.stdout.on('data', (data: Buffer) => send({ type: 'stdout', data: stdout.write(data) }));
@@ -45,6 +46,9 @@ if (require.main === module) {
         killer.unref();
       } else {
         if (child.pid) await killTree(child.pid);
+        // Sending SIGKILL does not wait for the process to exit. Keep the
+        // watchdog alive until its child has exited and closed its handles.
+        await childClosed;
         process.exit(0);
       }
     } catch { process.exit(1); }
