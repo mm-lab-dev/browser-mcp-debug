@@ -13,7 +13,7 @@ Browser MCP Debug 0.1.0 was developed and exercised on Windows with desktop VS C
 
 Reviewed package: `browser-mcp-debug-0.1.0.vsix`
 
-SHA-256: `0328d7534b132a77f27ede4415b1360276c7721c6bd3ac51b2b6dd207e7a6279`
+SHA-256: `d33dfcabb38813fd317b6d1fdec890a5e2e5ca007846f1587fa2fd1ea217fb62`
 
 ## Automated checks
 

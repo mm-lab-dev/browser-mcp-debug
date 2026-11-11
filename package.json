@@ -1,7 +1,7 @@
 {
   "name": "browser-mcp-debug",
   "displayName": "Browser MCP Debug",
-  "description": "Start host-side browser MCP servers with a local or Remote-SSH debug session.",
+  "description": "Use Playwright MCP and Chrome DevTools MCP with your VS Code Chrome debugger, locally or over Remote-SSH.",
   "version": "0.1.0",
   "publisher": "mm-lab",
   "private": true,
