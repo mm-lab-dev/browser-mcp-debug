@@ -7,7 +7,7 @@ import { ManagedProcess } from './processManager';
 import { setTimeout as delay } from 'node:timers/promises';
 import net from 'node:net';
 
-export const clientInfo = { name: 'browser-mcp-debug', version: '0.1.0' };
+export const clientInfo = { name: 'browser-mcp-debug', version: '0.1.1' };
 
 export async function assertPortAvailable(port: number): Promise<void> {
   await new Promise<void>((resolve, reject) => {

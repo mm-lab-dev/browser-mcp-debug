@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Highlight Playwright MCP and Chrome DevTools MCP integration in the extension description and README.
+
 ## 0.1.0
 
 - Share one dedicated Chrome between the existing Chrome debugger, Playwright MCP, and Chrome DevTools MCP.

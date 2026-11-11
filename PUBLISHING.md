@@ -1,6 +1,6 @@
 # Publishing Browser MCP Debug
 
-Prepared release: **0.1.0**
+Prepared release: **0.1.1**
 
 Repository: **https://github.com/mm-lab-dev/browser-mcp-debug**
 
@@ -14,7 +14,7 @@ Extension ID: **mm-lab.browser-mcp-debug**
 
 1. Create or confirm `mm-lab-dev/browser-mcp-debug` with `main` as its default branch.
 2. Review and commit the prepared source, MIT license, changelog, support information, icon, and third-party notices.
-3. Push the source and the matching release tag, such as `v0.1.0`, when ready to release.
+3. Push the source and the matching release tag, such as `v0.1.1`, when ready to release.
 4. Make the repository public before Marketplace publication. The packaged README uses HTTPS image URLs under `main`; those images must be publicly accessible.
 
 Repository creation, commits, pushes, tags, GitHub releases, and Marketplace publication are separate release actions. They have not been performed by the preparation scripts.
@@ -35,8 +35,8 @@ npm run package
 
 Packaging produces:
 
-- `browser-mcp-debug-0.1.0.vsix`
-- `browser-mcp-debug-0.1.0.vsix.sha256`
+- `browser-mcp-debug-0.1.1.vsix`
+- `browser-mcp-debug-0.1.1.vsix.sha256`
 - `artifacts/release/package-verification.json`
 
 The package command builds both runtime bundles, generates notices for the dependencies actually included, creates the VSIX, and inspects its contents. Verification rejects unexpected files, stale bundles or assets, missing legal files, invalid release metadata, and README images without repository HTTPS URLs. Run `npm run verify:package` to inspect an existing package again.
@@ -65,7 +65,7 @@ The workflows do not run the desktop VS Code/Chrome integration suite. Run that 
 After the source, listing, installation, and real-environment checks are complete, upload the exact reviewed VSIX through [Marketplace publisher management](https://marketplace.visualstudio.com/manage/publishers/), or authenticate the publisher and run:
 
 ```sh
-npx vsce publish --packagePath browser-mcp-debug-0.1.0.vsix
+npx vsce publish --packagePath browser-mcp-debug-0.1.1.vsix
 ```
 
 Use the [current VS Code publishing guidance](https://code.visualstudio.com/api/working-with-extensions/publishing-extension) for authentication. If automated Marketplace publishing is added later, use Trusted Publishing rather than committing a long-lived token.
