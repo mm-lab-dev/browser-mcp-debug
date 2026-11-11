@@ -1,0 +1,5 @@
+{
+  "message": "OK — Angular sample response",
+  "source": "repository-local static JSON",
+  "tools": ["Playwright MCP", "Chrome DevTools MCP"]
+}

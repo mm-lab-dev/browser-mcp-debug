@@ -1,0 +1,276 @@
+{
+  "name": "browser-mcp-debug",
+  "displayName": "Browser MCP Debug",
+  "description": "Start host-side browser MCP servers with a local or Remote-SSH debug session.",
+  "version": "0.1.0",
+  "publisher": "mm-lab",
+  "private": true,
+  "license": "MIT",
+  "icon": "resources/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mm-lab-dev/browser-mcp-debug.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mm-lab-dev/browser-mcp-debug/issues"
+  },
+  "homepage": "https://github.com/mm-lab-dev/browser-mcp-debug#readme",
+  "keywords": [
+    "chrome",
+    "mcp",
+    "playwright",
+    "devtools",
+    "remote-ssh",
+    "angular"
+  ],
+  "galleryBanner": {
+    "color": "#173d32",
+    "theme": "dark"
+  },
+  "pricing": "Free",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Debuggers"
+  ],
+  "extensionKind": [
+    "ui"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onDebugResolve:browser-mcp"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    },
+    "virtualWorkspaces": false
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "test": "npm run compile && node --test out/test/*.test.js",
+    "test:vscode": "npm run bundle && node scripts/smoke.cjs",
+    "demo:angular:install": "npm --prefix samples/angular-demo ci --no-audit --no-fund",
+    "demo:angular": "npm run bundle && node scripts/angular-demo.cjs start",
+    "demo:angular:check": "node scripts/angular-demo.cjs check",
+    "demo:angular:memory": "node scripts/angular-memory.cjs",
+    "demo:angular:stop": "node scripts/angular-demo.cjs stop",
+    "bundle": "npm run compile && node scripts/bundle.cjs",
+    "vscode:prepublish": "npm run bundle",
+    "icon": "node scripts/render-icon.cjs",
+    "package": "vsce package --no-dependencies --githubBranch main && npm run verify:package",
+    "verify:package": "node scripts/verify-package.cjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.0",
+    "proper-lockfile": "^4.1.2",
+    "ws": "^8.22.2"
+  },
+  "devDependencies": {
+    "@playwright/mcp": "0.0.85",
+    "@types/node": "^22.0.0",
+    "@types/proper-lockfile": "^4.1.4",
+    "@types/vscode": "~1.96.0",
+    "@types/ws": "^8.18.2",
+    "@vscode/vsce": "4.0.0",
+    "chrome-devtools-mcp": "1.12.0",
+    "esbuild": "^0.25.0",
+    "playwright-core": "1.65.0",
+    "typescript": "^5.7.0",
+    "yauzl": "3.4.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "browserMcp.showOutput",
+        "title": "Browser MCP: Show Output"
+      }
+    ],
+    "configuration": {
+      "title": "Browser MCP",
+      "properties": {
+        "browserMcp.playwright.command": {
+          "type": "string",
+          "default": "npx",
+          "scope": "machine"
+        },
+        "browserMcp.playwright.package": {
+          "type": "string",
+          "default": "@playwright/mcp@latest",
+          "scope": "machine"
+        },
+        "browserMcp.playwright.defaultPort": {
+          "type": "integer",
+          "default": 8931,
+          "minimum": 1024,
+          "maximum": 65535
+        },
+        "browserMcp.devtools.command": {
+          "type": "string",
+          "default": "npx",
+          "scope": "machine"
+        },
+        "browserMcp.devtools.package": {
+          "type": "string",
+          "default": "chrome-devtools-mcp@latest",
+          "scope": "machine"
+        },
+        "browserMcp.devtools.defaultPort": {
+          "type": "integer",
+          "default": 8932,
+          "minimum": 1024,
+          "maximum": 65535
+        },
+        "browserMcp.startupTimeout": {
+          "type": "integer",
+          "default": 120000,
+          "minimum": 1000,
+          "maximum": 300000
+        },
+        "browserMcp.logging.level": {
+          "type": "string",
+          "enum": [
+            "info",
+            "debug"
+          ],
+          "default": "info"
+        }
+      }
+    },
+    "debuggers": [
+      {
+        "type": "browser-mcp",
+        "label": "Browser MCP",
+        "languages": [
+          "typescript",
+          "javascript",
+          "html"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "target"
+            ],
+            "properties": {
+              "target": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Existing Chrome launch configuration name in the same workspace folder. Compounds are not supported."
+              },
+              "startupTimeout": {
+                "type": "integer",
+                "minimum": 1000,
+                "maximum": 300000,
+                "default": 120000
+              },
+              "browser": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "chrome"
+                    ],
+                    "default": "chrome"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "Informational in MVP. Navigation is managed by target or MCP tools."
+                  },
+                  "executablePath": {
+                    "type": "string",
+                    "description": "Absolute path to Chrome on the local computer. Detected automatically when omitted."
+                  },
+                  "userDataDir": {
+                    "type": "string",
+                    "description": "Absolute local path to an empty or extension-owned dedicated profile. Defaults to extension storage."
+                  }
+                }
+              },
+              "playwrightMcp": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "command": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "package": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "port": {
+                    "type": "integer",
+                    "minimum": 1024,
+                    "maximum": 65535,
+                    "default": 8931
+                  }
+                }
+              },
+              "chromeDevtoolsMcp": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "enabled": {
+                    "type": "boolean",
+                    "default": true
+                  },
+                  "command": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "package": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "port": {
+                    "type": "integer",
+                    "minimum": 1024,
+                    "maximum": 65535,
+                    "default": 8932,
+                    "description": "Local HTTP tools gateway port."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "name": "Frontend + Browser MCP",
+            "type": "browser-mcp",
+            "request": "launch",
+            "target": "Frontend",
+            "browser": {
+              "type": "chrome"
+            }
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Browser MCP: wrap existing debugger",
+            "body": {
+              "name": "Frontend + Browser MCP",
+              "type": "browser-mcp",
+              "request": "launch",
+              "target": "${1:Frontend}",
+              "browser": {
+                "type": "chrome"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "overrides": {
+    "@vscode/vsce": {
+      "minimatch": "11.0.7"
+    }
+  }
+}

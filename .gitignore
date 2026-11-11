@@ -1,0 +1,44 @@
+# Installed dependencies, including the Angular sample
+node_modules/
+
+# Build and package output
+out/
+dist/
+out-tsc/
+*.tsbuildinfo
+*.vsix
+*.vsix.sha256
+
+# Repository-local caches, temporary files, and browser/VS Code profiles
+.cache/
+.tmp/
+.angular/
+
+# Generated screenshots, verification data, and profiling output
+/artifacts/
+/coverage/
+/playwright-report/
+/test-results/
+.playwright-mcp/
+*.heapsnapshot
+*.heapprofile
+*.cpuprofile
+*.log
+
+# Local environment files; keep reusable examples
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Personal editor settings; retain shared launch/task configuration
+/.vscode/*
+!/.vscode/launch.json
+!/.vscode/tasks.json
+!/.vscode/extensions.json
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+

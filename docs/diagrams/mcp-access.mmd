@@ -1,0 +1,17 @@
+flowchart LR
+  subgraph remote["Remote SSH host"]
+    client["MCP client<br/>e.g. Codex"]
+    rp["127.0.0.1:8931"]
+    rd["127.0.0.1:8932"]
+    client -->|HTTP| rp
+    client -->|HTTP| rd
+  end
+  subgraph host["Local computer"]
+    pw["Playwright MCP<br/>127.0.0.1:8931/mcp"]
+    gateway["HTTP gateway<br/>(inside VS Code extension)<br/>127.0.0.1:8932/mcp"]
+    dt["Chrome DevTools MCP"]
+    gateway -->|stdio| dt
+  end
+  rp -.->|SSH reverse tunnel| pw
+  rd -.->|SSH reverse tunnel| gateway
+

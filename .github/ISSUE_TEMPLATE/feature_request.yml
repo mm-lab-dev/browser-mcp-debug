@@ -1,0 +1,17 @@
+name: Feature request
+description: Suggest an improvement to Browser MCP Debug.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: Describe the workflow and what is missing.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested behavior
+      description: Describe the desired behavior and any alternatives considered.
+    validations:
+      required: true

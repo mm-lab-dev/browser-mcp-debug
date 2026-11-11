@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "name": "Smoke target", "type": "node", "request": "launch",
+    "program": "${workspaceFolder}/app.cjs", "console": "internalConsole",
+    "skipFiles": ["<node_internals>/**"]
+  }, {
+    "name": "Smoke Chrome", "type": "chrome", "request": "launch",
+    "file": "${workspaceFolder}/browser.html", "webRoot": "${workspaceFolder}",
+    "preLaunchTask": "chrome-prelaunch", "postDebugTask": "chrome-postdebug"
+  }]
+}

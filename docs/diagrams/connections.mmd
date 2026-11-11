@@ -1,0 +1,22 @@
+flowchart TB
+  subgraph host["Local computer"]
+    direction LR
+    vscode["VS Code<br/>Browser MCP Debug"]
+    pw["Playwright MCP"]
+    dt["Chrome DevTools MCP"]
+    chrome["Dedicated Chrome<br/>Separate persistent profile"]
+    vscode -->|Start / stop| pw
+    vscode -->|Start / stop| dt
+    vscode -->|Start / stop| chrome
+    pw -->|CDP| chrome
+    dt -->|CDP| chrome
+  end
+  subgraph remote["Remote SSH host"]
+    direction LR
+    server["VS Code Server"]
+    target["Project tasks<br/>Development server"]
+    server -->|Run| target
+  end
+  host <-->|VS Code / Remote-SSH| remote
+  host -->|Chrome / HTTP port forwarding| remote
+

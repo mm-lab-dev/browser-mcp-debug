@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      npm_config_cache: ${{ github.workspace }}/.cache/npm
+      NODE_DISABLE_COMPILE_CACHE: '1'
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Prepare repository-local temporary files
+        shell: bash
+        run: mkdir -p .tmp .cache
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+        env:
+          TEMP: ${{ github.workspace }}/.tmp
+          TMP: ${{ github.workspace }}/.tmp
+          TMPDIR: ${{ github.workspace }}/.tmp
+      - run: npm audit
+      - run: npm run package
+      - name: Check generated license notices
+        run: git diff --exit-code -- THIRD_PARTY_NOTICES.txt

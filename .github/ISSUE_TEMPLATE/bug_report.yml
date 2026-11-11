@@ -1,0 +1,32 @@
+name: Bug report
+description: Report a browser, debugging, MCP, or Remote-SSH problem.
+body:
+  - type: markdown
+    attributes:
+      value: Remove credentials, private URLs, browser data, and proprietary source from configurations and logs.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Versions and environment
+      description: Extension, VS Code, Chrome, Node.js, and local/remote operating system versions. State whether Remote-SSH is used.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps and expected behavior
+      description: Include the actual result and whether the original Chrome launch configuration works without Browser MCP Debug.
+    validations:
+      required: true
+  - type: textarea
+    id: configuration
+    attributes:
+      label: Minimal launch configurations
+      description: Include the browser-mcp wrapper and its Chrome target. Remove sensitive values.
+      render: json
+  - type: textarea
+    id: output
+    attributes:
+      label: Browser MCP output
+      description: Relevant Output > Browser MCP messages and forwarding details, with sensitive values removed.
+      render: text
